@@ -1,4 +1,4 @@
-const { celebrate, Joi } = require("celebrate");
+const { celebrate, Joi } = require('celebrate');
 
 module.exports.createUserValidator = celebrate({
   body: Joi.object().keys({
@@ -20,7 +20,7 @@ module.exports.loginValidator = celebrate({
 });
 module.exports.errHandler = (err, req, res, next) => {
   if (err.statusCode == 500 || !err.statusCode) {
-    res.status(500).send({ message: "Неизвестная ошибка сервера" });
+    res.status(500).send({ message: 'Неизвестная ошибка сервера' });
   } else {
     res.status(err.statusCode).send({ message: err.message });
   }

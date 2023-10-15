@@ -1,13 +1,14 @@
-const movieRouter = require("express").Router(); // создали роутер
-const { celebrate, Joi } = require("celebrate");
+const movieRouter = require('express').Router(); // создали роутер
+const { celebrate, Joi } = require('celebrate');
 const {
   createMovie,
   deleteMovieById,
   getAllMovies,
-} = require("../constrollers/movies");
-movieRouter.get("/", getAllMovies);
+} = require('../constrollers/movies');
+
+movieRouter.get('/', getAllMovies);
 movieRouter.post(
-  "/",
+  '/',
   celebrate({
     body: Joi.object().keys({
       country: Joi.string().min(2),
@@ -18,24 +19,24 @@ movieRouter.post(
       image: Joi.string()
         .required()
         .pattern(
-          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
+          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/,
         ),
       trailerLink: Joi.string()
         .required()
         .pattern(
-          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
+          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/,
         ),
       thumbnail: Joi.string()
         .required()
         .pattern(
-          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
+          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/,
         ),
       movieId: Joi.number().required(),
       nameRU: Joi.string().min(2),
       nameEN: Joi.string().min(2),
     }),
   }),
-  createMovie
+  createMovie,
 );
-movieRouter.delete("/:movieId", deleteMovieById);
+movieRouter.delete('/:movieId', deleteMovieById);
 module.exports = { movieRouter };

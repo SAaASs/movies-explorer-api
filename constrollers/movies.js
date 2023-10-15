@@ -1,11 +1,9 @@
-const Mongoose = require("mongoose");
-const Movie = require("../models/movie");
-const NotFoundError = require("../errors/NotFoundError");
-const ForbidenError = require("../errors/ForbidenError");
-const BadRequestError = require("../errors/BadRequestError");
+const Movie = require('../models/movie');
+const NotFoundError = require('../errors/NotFoundError');
+const ForbidenError = require('../errors/ForbidenError');
 
 module.exports.getAllMovies = (req, res, next) => {
-  console.log("req.user", req.user);
+  console.log('req.user', req.user);
   Movie.find({ owner: req.user._id })
     .then((movies) => {
       res.send(movies);
@@ -20,7 +18,7 @@ module.exports.deleteMovieById = (req, res, next) => {
   Movie.findById(sees)
     .then((movie) => {
       if (movie != null) {
-        console.log("movie.owner", movie.owner, "currentUser", currentUser);
+        console.log('movie.owner', movie.owner, 'currentUser', currentUser);
         if (movie.owner.toString() == currentUser.toString()) {
           Movie.findByIdAndRemove(sees)
             .then((movie) => {
@@ -31,11 +29,11 @@ module.exports.deleteMovieById = (req, res, next) => {
             });
         } else {
           next(
-            new ForbidenError("Это не ваща карточка, вы не можете ее удалить")
+            new ForbidenError('Это не ваща карточка, вы не можете ее удалить'),
           );
         }
       } else {
-        next(new NotFoundError("Карточки с такми id не существует"));
+        next(new NotFoundError('Карточки с такми id не существует'));
       }
     })
     .catch((err) => {
@@ -74,13 +72,13 @@ module.exports.createMovie = (req, res, next) => {
         owner,
       },
     ],
-    { runValidators: true }
+    { runValidators: true },
   )
     .then((movie) => {
       res.send(movie[0]);
     })
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         next(new ForbidenError(err.message));
         return;
       }
