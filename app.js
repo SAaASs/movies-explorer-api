@@ -18,7 +18,7 @@ const {
 } = require("./middlewares/errHandler");
 // Слушаем 3000 порт
 const { PORT = 3001 } = process.env;
-mongoose.connect("mongodb://127.0.0.1:27017/movieexplorerdb");
+mongoose.connect(process.env.DB_ADDRESS);
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true }));
