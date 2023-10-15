@@ -22,7 +22,8 @@ const { PORT = 3000 } = process.env;
 mongoose.connect("mongodb://127.0.0.1:27017/movieexplorerdb");
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
-app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger); // для приёма веб-страниц внутри POST-запроса
 app.post(
   "/signin",
   celebrate({
@@ -47,9 +48,7 @@ app.post(
 app.use(auth);
 app.use("/users/", userRouter);
 app.use("/movies/", movieRouter);
-app.get("/test", (req, res) => {
-  res.send(req.user);
-});
+app.use(errorLogger);
 app.use(errors());
 app.use(errHandler);
 app.listen(PORT, () => {
