@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const { login, createUser } = require("./constrollers/users");
 const { userRouter } = require("./routes/users");
-const { errHandler } = require("./middlewares/errHandler");
 const { auth } = require("./middlewares/auth");
 const { movieRouter } = require("./routes/movies");
 const { errHandler } = require("./middlewares/errHandler");
