@@ -14,7 +14,12 @@ module.exports.auth = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify(token, process.env.JWT_SECRET);
+    payload = jwt.verify(
+      token,
+      process.env.NODE_ENV == 'production'
+        ? process.env.JWT_SECRET
+        : 'dev-secret',
+    );
   } catch (err) {
     console.log('2nd err');
     next(new UnauthorisedError('Неправильный логин или пароль'));

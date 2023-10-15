@@ -13,7 +13,9 @@ const { errHandler } = require('./middlewares/errHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 // Слушаем 3000 порт
 const { PORT = 3001 } = process.env;
-mongoose.connect(process.env.DB_ADDRESS);
+mongoose.connect(
+  process.env.NODE_ENV == 'production' ? process.env.DB_ADDRESS : 'dev-secret',
+);
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true }));
