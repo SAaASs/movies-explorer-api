@@ -6,6 +6,7 @@ require('events').EventEmitter.defaultMaxListeners = 20;
 const { celebrate, Joi } = require('celebrate');
 const express = require('express');
 const { login, createUser } = require('./constrollers/users');
+const NotFoundError = require('./errors/NotFoundError');
 const { userRouter } = require('./routes/users');
 const { auth } = require('./middlewares/auth');
 const { movieRouter } = require('./routes/movies');
@@ -44,6 +45,9 @@ app.post(
 app.use(auth);
 app.use('/users/', userRouter);
 app.use('/movies/', movieRouter);
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Выбранного пути не существует'));
+});
 app.use(errorLogger);
 app.use(errors());
 app.use(errHandler);

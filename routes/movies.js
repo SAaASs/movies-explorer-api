@@ -38,5 +38,13 @@ movieRouter.post(
   }),
   createMovie,
 );
-movieRouter.delete('/:movieId', deleteMovieById);
+movieRouter.delete(
+  '/:movieId',
+  celebrate({
+    params: Joi.object().keys({
+      movieId: Joi.string().required().hex().length(24),
+    }),
+  }),
+  deleteMovieById,
+);
 module.exports = { movieRouter };

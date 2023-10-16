@@ -18,7 +18,6 @@ module.exports.deleteMovieById = (req, res, next) => {
   Movie.findById(sees)
     .then((movie) => {
       if (movie != null) {
-        console.log('movie.owner', movie.owner, 'currentUser', currentUser);
         if (movie.owner.toString() == currentUser.toString()) {
           Movie.findByIdAndRemove(sees)
             .then((movie) => {

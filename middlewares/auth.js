@@ -25,11 +25,14 @@ module.exports.auth = (req, res, next) => {
     next(new UnauthorisedError('Неправильный логин или пароль'));
     return;
   }
-  console.log(payload._id);
-  User.findById(payload._id).then((user) => {
-    req.user = user;
-    console.log(req.user);
-    next();
-  });
+  User.findById(payload._id)
+    .then((user) => {
+      req.user = user;
+      console.log(req.user);
+      next();
+    })
+    .catch((err) => {
+      next(err);
+    });
   // пропускаем запрос дальше
 };

@@ -70,9 +70,10 @@ module.exports.getCurrentUser = (req, res) => {
   res.status(200).send(req.user);
 };
 module.exports.patchCurrentUser = (req, res, next) => {
-  const { name } = req.body;
+  const { name, email } = req.body;
   const updMaterial = {};
   updMaterial.name = name;
+  updMaterial.email = email;
   const owner = req.user._id;
   User.findByIdAndUpdate(owner, updMaterial, { runValidators: true, new: true })
     .then((user) => {
@@ -81,6 +82,10 @@ module.exports.patchCurrentUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ForbidenError(err.message));
+        return;
+      }
+      if (err.code == 11000) {
+        next(new ConflictError(err.message));
         return;
       }
       next(err);
