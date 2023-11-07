@@ -13,7 +13,7 @@ const { movieRouter } = require('./routes/movies');
 const { errHandler } = require('./middlewares/errHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 // Слушаем 3000 порт
-const { PORT = 3001 } = process.env;
+const { PORT = 3002 } = process.env;
 mongoose.connect(
   process.env.NODE_ENV == 'production' ? process.env.DB_ADDRESS : 'dev-secret',
 );
