@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('events').EventEmitter.defaultMaxListeners = 20;
 const { celebrate, Joi } = require('celebrate');
 const express = require('express');
@@ -20,9 +21,15 @@ mongoose.connect(
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use(requestLogger); // для приёма веб-страниц внутри POST-запроса
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 app.post(
   '/signin',
+  cors(corsOptions),
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -33,6 +40,7 @@ app.post(
 );
 app.post(
   '/signup',
+  cors(corsOptions),
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
