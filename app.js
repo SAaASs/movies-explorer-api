@@ -19,7 +19,6 @@ const { PORT = 3002 } = process.env;
 mongoose.connect(
   process.env.NODE_ENV == 'production' ? process.env.DB_ADDRESS : 'dev-secret',
 );
-db.dropDatabase();
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true }));
