@@ -19,6 +19,7 @@ module.exports.loginValidator = celebrate({
   }),
 });
 module.exports.errHandler = (err, req, res, next) => {
+  console.log(err);
   if (err.statusCode == 500 || !err.statusCode) {
     res.status(500).send({ message: 'Неизвестная ошибка сервера' });
   } else {
