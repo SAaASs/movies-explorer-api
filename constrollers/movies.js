@@ -15,11 +15,11 @@ module.exports.getAllMovies = (req, res, next) => {
 module.exports.deleteMovieById = (req, res, next) => {
   const sees = req.params.movieId;
   const currentUser = req.user._id;
-  Movie.findById(sees)
+  Movie.findOne({ movieId: sees, owner: currentUser })
     .then((movie) => {
       if (movie != null) {
         if (movie.owner.toString() == currentUser.toString()) {
-          Movie.findByIdAndRemove(sees)
+          Movie.deleteOne({ movieId: sees })
             .then((movie) => {
               res.send(movie);
             })
@@ -40,6 +40,7 @@ module.exports.deleteMovieById = (req, res, next) => {
     });
 };
 module.exports.createMovie = (req, res, next) => {
+  console.log(req.body);
   const {
     country,
     director,
