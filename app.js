@@ -17,7 +17,9 @@ const { db } = require('./models/movie');
 // Слушаем 3000 порт
 const { PORT = 3002 } = process.env;
 mongoose.connect(
-  process.env.NODE_ENV == 'production' ? process.env.DB_ADDRESS : 'dev-secret',
+  process.env.NODE_ENV == 'production'
+    ? process.env.DB_ADDRESS
+    : 'mongodb://127.0.0.1:27017/movieexplorerdb',
 );
 const app = express();
 app.use(bodyParser.json()); // для собирания JSON-формата
